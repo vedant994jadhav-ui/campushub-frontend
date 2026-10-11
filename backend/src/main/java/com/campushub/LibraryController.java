@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
-public class ProductController {
+@RequestMapping("/api")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174","http://localhost:3000"})
+public class LibraryController {
     private final ShopService service;
 
-    public ProductController(ShopService service) { this.service = service; }
+    public LibraryController(ShopService service) { this.service = service; }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product create(@Valid @RequestBody Product p) { return service.createProduct(p); }
 
-    @GetMapping
+    @GetMapping("/resourses")
     public List<Product> list(@RequestParam(required = false) String category,
                               @RequestParam(required = false) String search) {
         return service.getProducts(category, search);

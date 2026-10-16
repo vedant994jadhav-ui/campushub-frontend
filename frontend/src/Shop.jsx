@@ -61,7 +61,7 @@ export default function Shop() {
 
   return (
     <>
-      <PageHeader icon="🧪" title="Campus Shop" subtitle="Lab equipment ani academic items" from="#0d9488" to="#6366f1" />
+      <PageHeader icon="🧪" title="Campus Shop" subtitle="Lab equipment and academic items" from="#0d9488" to="#6366f1" />
       <Alert message={message} error={error} />
 
       {isAdmin && (
@@ -105,7 +105,7 @@ export default function Shop() {
           </div>
         ))}
       </div>
-      {products.length === 0 && <Empty icon="🛍️" text="Kahi products nahit." />}
+      {products.length === 0 && <Empty icon="🛍️" text="No products yet." />}
     </>
   );
 }

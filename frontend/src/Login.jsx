@@ -31,11 +31,11 @@ export default function Login() {
     <div className="auth-wrap">
       <div className="auth-side">
         <h1>🎓 Campus Hub</h1>
-        <p>Tuzya campus cha digital community.</p>
+        <p>Your campus digital community.</p>
         <ul>
-          <li>📚 Study materials upload ani download</li>
-          <li>👥 Groups madhe discussions</li>
-          <li>🔔 Notifications ani updates</li>
+          <li>📚 Upload and download study materials</li>
+          <li>👥 Discuss in student groups</li>
+          <li>🔔 Notifications and updates</li>
           <li>🧪 Lab equipment shop</li>
         </ul>
       </div>

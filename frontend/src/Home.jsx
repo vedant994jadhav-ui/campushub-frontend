@@ -4,11 +4,12 @@ import api from "./api.js";
 import { useAuth } from "./AuthContext.jsx";
 
 const FEATURES = [
-{ icon: "📚", title: "Academic Library", text: "Study guides, research papers, lab manuals ani digital textbooks ek ch thikani.", to: "/library" },  { icon: "👥", title: "Student Groups", text: "Groups join kar, doubts post kar ani mitrancha sobat discuss kar.", to: "/groups" },
-  { icon: "🔔", title: "Notifications", text: "Mahatvache updates ani alerts kadhi miss karu nako.", to: "/notifications" },
-  { icon: "💝", title: "Donate", text: "Tuzi jun books ani notes dusrya students na upyogi padu de.", to: "/donate" },
-  { icon: "⭐", title: "Subscriptions", text: "Free kinva Premium plan nivad ani jast features unlock kar.", to: "/subscriptions" },
-  { icon: "🧪", title: "Lab Shop", text: "Lab equipment ani academic items ek ch app madhe.", to: "/shop" },
+  { icon: "📚", title: "Academic Library", text: "Study guides, research papers, lab manuals and digital textbooks, all in one place.", to: "/library" },
+  { icon: "👥", title: "Student Groups", text: "Join groups, post your doubts and discuss with your peers.", to: "/groups" },
+  { icon: "🔔", title: "Notifications", text: "Stay on top of important updates and alerts.", to: "/notifications" },
+  { icon: "💝", title: "Donate", text: "Give your old books and notes a second life for other students.", to: "/donate" },
+  { icon: "⭐", title: "Subscriptions", text: "Pick a Free or Premium plan and unlock more features.", to: "/subscriptions" },
+  { icon: "🧪", title: "Lab Shop", text: "Lab equipment and academic items in one app.", to: "/shop" },
 ];
 
 export default function Home() {
@@ -33,7 +34,7 @@ export default function Home() {
         <div className="hero-content">
           <span className="pill">✨ Student Resource Sharing and Collaboration System</span>
           <h1>Learn together.<br />Share smarter.</h1>
-          <p>Campus Hub madhe study materials shodh, groups join kar ani tuzya campus cha community cha bhag ho.</p>
+          <p>Find study materials, join groups and become a part of your campus community.</p>
           <div className="hero-actions">
             <Link className="btn btn-light" to="/library">Explore Library</Link>
             {user ? (
@@ -64,9 +65,9 @@ export default function Home() {
 
       <h2 className="section-title">How it works</h2>
       <section className="steps">
-        <div className="card step"><div className="num">1</div><h3>Register</h3><p>Free account banav, 1 minute madhe.</p></div>
-        <div className="card step"><div className="num">2</div><h3>Upload or Join</h3><p>Resources upload kar kinva groups join kar.</p></div>
-        <div className="card step"><div className="num">3</div><h3>Collaborate</h3><p>Post kar, share kar ani ekmekanna madat kar.</p></div>
+        <div className="card step"><div className="num">1</div><h3>Register</h3><p>Create a free account in one minute.</p></div>
+        <div className="card step"><div className="num">2</div><h3>Upload or Join</h3><p>Upload resources or join groups.</p></div>
+        <div className="card step"><div className="num">3</div><h3>Collaborate</h3><p>Post, share and help each other.</p></div>
       </section>
 
       <section className="cta">

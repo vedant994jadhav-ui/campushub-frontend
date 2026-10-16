@@ -86,7 +86,7 @@ export default function Library() {
 
   return (
     <>
-      <PageHeader icon="📚" title="Academic Library" subtitle="Study guides, research papers, lab manuals ani digital textbooks" from="#4f46e5" to="#06b6d4" />
+      <PageHeader icon="📚" title="Academic Library" subtitle="Study guides, research papers, lab manuals and digital textbooks" from="#4f46e5" to="#06b6d4" />
       <Alert message={message} error={error} />
 
       {user ? (
@@ -108,7 +108,7 @@ export default function Library() {
           </div>
         </form>
       ) : (
-        <div className="msg ok">🔐 Resource upload karayla Log In kar.</div>
+        <div className="msg ok">🔐 Please log in to upload a resource.</div>
       )}
 
       <form className="card toolbar" onSubmit={(e) => { e.preventDefault(); load(); }}>
@@ -144,7 +144,7 @@ export default function Library() {
           </div>
         ))}
       </div>
-      {resources.length === 0 && <Empty icon="📭" text="Kahi resources nahit. Pahila resource tu upload kar!" />}
+      {resources.length === 0 && <Empty icon="📭" text="No resources yet. Be the first to upload one!" />}
     </>
   );
 }

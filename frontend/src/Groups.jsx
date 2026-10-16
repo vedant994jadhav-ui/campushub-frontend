@@ -76,7 +76,7 @@ export default function Groups() {
   };
 
   const deleteGroup = async (g) => {
-    if (!window.confirm("Group ani tyache sagle posts delete honar. Barobar?")) return;
+    if (!window.confirm("This will delete the group and all its posts. Are you sure?")) return;
     try {
       await api.delete(`/groups/${g.id}`);
       setSelected(null);
@@ -90,7 +90,7 @@ export default function Groups() {
   const join = async (g) => {
     try {
       await api.post(`/groups/${g.id}/join`, null, { params: { userId: user.id } });
-      notify("Join request sent. Group owner approve karel tevha tu post karu shakshil.");
+      notify("Join request sent. You can post once the group owner approves it.");
     } catch (err) {
       notify(errorMessage(err), true);
     }
@@ -129,7 +129,7 @@ export default function Groups() {
 
   return (
     <>
-      <PageHeader icon="👥" title="Student Groups" subtitle="Groups join kar, doubts post kar ani mitrancha sobat discuss kar" from="#0ea5e9" to="#7c3aed" />
+      <PageHeader icon="👥" title="Student Groups" subtitle="Join groups, post your doubts and discuss with your peers" from="#0ea5e9" to="#7c3aed" />
       <Alert message={message} error={error} />
 
       <form className="card stack" onSubmit={createGroup}>
@@ -157,7 +157,7 @@ export default function Groups() {
           </div>
         ))}
       </div>
-      {groups.length === 0 && <Empty icon="👥" text="Kahi groups nahit. Pahila group tu bana!" />}
+      {groups.length === 0 && <Empty icon="👥" text="No groups yet. Create the first one!" />}
 
       {selected && (
         <div className="card" style={{ marginTop: 24 }}>
@@ -204,7 +204,7 @@ export default function Groups() {
               </div>
             </div>
           ))}
-          {posts.length === 0 && <Empty icon="💬" text="Ajun kahi posts nahit." />}
+          {posts.length === 0 && <Empty icon="💬" text="No posts yet." />}
         </div>
       )}
     </>

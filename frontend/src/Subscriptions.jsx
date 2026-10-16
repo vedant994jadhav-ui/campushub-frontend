@@ -16,13 +16,14 @@ export default function Subscriptions() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
- const load = async () => {
-  // Temporary mock data backend connect hoiparyant
-  setItems([
-    { id: 1, title: "Welcome to CampusHub!", message: "Your account is active.", read: false },
-    { id: 2, title: "Assignment Reminder", message: "Submit Java project by tomorrow.", read: true }
-  ]);
-};
+  const load = async () => {
+    try {
+      const res = await api.get(`/subscriptions/user/${user.id}`);
+      setSubs(res.data);
+    } catch (err) {
+      setError(errorMessage(err));
+    }
+  };
 
   useEffect(() => { load(); }, []);
 
@@ -48,7 +49,7 @@ export default function Subscriptions() {
 
   return (
     <>
-      <PageHeader icon="⭐" title="Subscriptions" subtitle="Tuzya gajesathi barobar plan nivad" from="#7c3aed" to="#f59e0b" />
+      <PageHeader icon="⭐" title="Subscriptions" subtitle="Pick the plan that suits you" from="#7c3aed" to="#f59e0b" />
       <Alert message={message} error={error} />
 
       <div className="plans">
@@ -79,7 +80,7 @@ export default function Subscriptions() {
           )}
         </div>
       ))}
-      {subs.length === 0 && <Empty icon="⭐" text="Ajun subscription nahi." />}
+      {subs.length === 0 && <Empty icon="⭐" text="No subscriptions yet." />}
     </>
   );
 }

@@ -7,7 +7,7 @@ const api = axios.create({
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Server sleep madhun uthat asel tar GET requests parat try karto
+// If the free server is waking up, retry GET requests a few times
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
@@ -25,8 +25,8 @@ api.interceptors.response.use(
 
 export function errorMessage(err) {
   if (err.response?.data?.message) return err.response.data.message;
-  if (!err.response) return "Server jaagha hot aahe. 1 minute thamb ani parat try kar.";
-  return "Kahi tari chukla. Parat try kar.";
+  if (!err.response) return "The server is waking up. Please wait a minute and try again.";
+  return "Something went wrong. Please try again.";
 }
 
 export default api;

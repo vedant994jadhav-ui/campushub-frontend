@@ -14,12 +14,13 @@ export default function Donate() {
   const [error, setError] = useState("");
 
   const load = async () => {
-  // Temporary mock data backend connect hoiparyant
-  setItems([
-    { id: 1, title: "Welcome to CampusHub!", message: "Your account is active.", read: false },
-    { id: 2, title: "Assignment Reminder", message: "Submit Java project by tomorrow.", read: true }
-  ]);
-};
+    try {
+      const res = await api.get("/donations", { params: { userId: user.id } });
+      setDonations(res.data);
+    } catch (err) {
+      setError(errorMessage(err));
+    }
+  };
 
   useEffect(() => { load(); }, []);
 
@@ -51,13 +52,13 @@ export default function Donate() {
 
   return (
     <>
-      <PageHeader icon="💝" title="Donate" subtitle="Tuzya jun books, notes ani equipment dusrya students na de" from="#ec4899" to="#f97316" />
+      <PageHeader icon="💝" title="Donate" subtitle="Donate your old books, notes and equipment to other students" from="#ec4899" to="#f97316" />
       <Alert message={message} error={error} />
 
       <div className="two-col">
         <form className="card stack" onSubmit={submit}>
           <h3>🎁 New donation</h3>
-          <textarea rows="4" placeholder="Kay donate karaychay? (jase notes, books, equipment)" value={details} onChange={(e) => setDetails(e.target.value)} />
+          <textarea rows="4" placeholder="What would you like to donate? (e.g. notes, books, equipment)" value={details} onChange={(e) => setDetails(e.target.value)} />
           <input placeholder="Resource ID (optional)" value={resourceId} onChange={(e) => setResourceId(e.target.value)} />
           <button type="submit">Donate</button>
         </form>
@@ -73,7 +74,7 @@ export default function Donate() {
               </div>
             </div>
           ))}
-          {donations.length === 0 && <Empty icon="🎁" text="Ajun donations nahit." />}
+          {donations.length === 0 && <Empty icon="🎁" text="No donations yet." />}
         </div>
       </div>
     </>

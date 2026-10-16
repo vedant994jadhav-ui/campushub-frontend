@@ -11,13 +11,14 @@ export default function Notifications() {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
- const load = async () => {
-  // Temporary mock data backend connect hoiparyant
-  setItems([
-    { id: 1, title: "Welcome to CampusHub!", message: "Your account is active.", read: false },
-    { id: 2, title: "Assignment Reminder", message: "Submit Java project by tomorrow.", read: true }
-  ]);
-};
+  const load = async () => {
+    try {
+      const res = await api.get(`/notifications/${user.id}`);
+      setItems(res.data);
+    } catch (err) {
+      setError(errorMessage(err));
+    }
+  };
 
   useEffect(() => { load(); }, []);
 
@@ -46,11 +47,11 @@ export default function Notifications() {
 
   return (
     <>
-      <PageHeader icon="🔔" title="Notifications" subtitle={`Tula ${unread} navin notification(s) aahet`} from="#f59e0b" to="#ec4899" />
+      <PageHeader icon="🔔" title="Notifications" subtitle={`You have ${unread} new notification(s)`} from="#f59e0b" to="#ec4899" />
       <Alert error={error} />
 
       <form className="card toolbar" onSubmit={create}>
-        <input style={{ flex: 1 }} placeholder="Test notification lihi (demo sathi)" value={text} onChange={(e) => setText(e.target.value)} />
+        <input style={{ flex: 1 }} placeholder="Write a test notification (for demo)" value={text} onChange={(e) => setText(e.target.value)} />
         <button type="submit">Add</button>
       </form>
 
@@ -68,7 +69,7 @@ export default function Notifications() {
           </div>
         </div>
       ))}
-      {items.length === 0 && <Empty icon="🔕" text="Kahi notifications nahit." />}
+      {items.length === 0 && <Empty icon="🔕" text="No notifications yet." />}
     </>
   );
 }

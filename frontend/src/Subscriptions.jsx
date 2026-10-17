@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext.jsx";
 import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
+import { Navigate } from "react-router-dom";
 
 const PLANS = [
   { name: "FREE", price: "₹0", note: "Forever free", features: ["✅ Library access", "✅ Join groups", "❌ Priority notifications"] },
@@ -25,7 +26,7 @@ export default function Subscriptions() {
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { if (user) load(); }, []);
 
   const subscribe = async (plan) => {
     setError(""); setMessage("");
@@ -46,6 +47,8 @@ export default function Subscriptions() {
       setError(errorMessage(err));
     }
   };
+
+if (!user) return <Navigate to="/login" replace />;
 
   return (
     <>

@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext.jsx";
 import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
+import { Navigate } from "react-router-dom";
 
 export default function Groups() {
   const { user } = useAuth();
@@ -126,6 +127,8 @@ export default function Groups() {
       notify(errorMessage(err), true);
     }
   };
+
+  if (!user) return <Navigate to="/login" replace />;
 
   return (
     <>

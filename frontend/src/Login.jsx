@@ -30,7 +30,6 @@ export default function Login() {
   return (
     <div className="auth-wrap">
       <div className="auth-side">
-        <h1>🎓 Campus Hub</h1>
         <p>Your campus digital community.</p>
         <ul>
           <li>📚 Upload and download study materials</li>

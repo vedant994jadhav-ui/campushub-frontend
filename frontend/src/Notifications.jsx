@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext.jsx";
 import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
+import { Navigate } from "react-router-dom";
 
 export default function Notifications() {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ export default function Notifications() {
     }
   };
 
-  useEffect(() => { load(); }, []);
+useEffect(() => { if (user) load(); }, []);
 
   const markRead = async (id) => {
     try {
@@ -44,6 +45,8 @@ export default function Notifications() {
   };
 
   const unread = items.filter((n) => n.status === "UNREAD").length;
+
+  if (!user) return <Navigate to="/login" replace />;
 
   return (
     <>

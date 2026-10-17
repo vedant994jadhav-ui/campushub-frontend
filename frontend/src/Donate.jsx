@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext.jsx";
 import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
+import { Navigate } from "react-router-dom";
 
 export default function Donate() {
   const { user } = useAuth();
@@ -22,7 +23,7 @@ export default function Donate() {
     }
   };
 
-  useEffect(() => { load(); }, []);
+useEffect(() => { if (user) load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -49,6 +50,8 @@ export default function Donate() {
       setError(errorMessage(err));
     }
   };
+
+if (!user) return <Navigate to="/login" replace />;
 
   return (
     <>

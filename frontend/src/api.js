@@ -7,15 +7,17 @@ const api = axios.create({
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// If the free server is waking up, retry GET requests a few times
+// While the free server is waking up, retry requests for about a minute
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
     const config = err.config;
-    if (config && !err.response && config.method === "get") {
+    const status = err.response?.status;
+    const waking = !err.response || [502, 503, 504].includes(status);
+    if (config && waking) {
       config.retryCount = (config.retryCount || 0) + 1;
-      if (config.retryCount <= 4) {
-        await sleep(8000);
+      if (config.retryCount <= 12) {
+        await sleep(6000);
         return api(config);
       }
     }
@@ -24,9 +26,15 @@ api.interceptors.response.use(
 );
 
 export function errorMessage(err) {
+ 
+  const status = err.response?.status;
   if (err.response?.data?.message) return err.response.data.message;
-  if (!err.response) return "The server is waking up. Please wait a minute and try again.";
+  if (err.response && [502, 503, 504].includes(status))
+    return "The server is waking up. Please wait a minute and try again.";
+  if (err.request && !err.response)
+    return `Cannot reach the server (${api.defaults.baseURL}). If it is the free server, wait a minute and try again.`;
   return "Something went wrong. Please try again.";
+
 }
 
 export default api;

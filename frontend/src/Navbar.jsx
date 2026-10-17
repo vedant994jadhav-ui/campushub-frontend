@@ -23,7 +23,10 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <NavLink to="/" className="brand">🎓 Campus Hub</NavLink>
+      <NavLink to="/" className="brand">
+  <span className="brand-logo" role="img" aria-label="Campus Hub logo"></span>
+  <span className="brand-text">Campus Hub</span>
+</NavLink>
 
       <button className="menu-btn" onClick={() => setOpen(!open)}>☰</button>
 

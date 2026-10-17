@@ -361,3 +361,42 @@ button.danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
 [data-theme="dark"] .plan.popular { box-shadow: 0 20px 50px rgba(99, 102, 241, 0.45); }
 [data-theme="dark"] input::placeholder,
 [data-theme="dark"] textarea::placeholder { color: #64748b; }
+/* ---------- Logo (uses /logo.jpg) ---------- */
+.brand { display: flex; align-items: center; gap: 10px; color: #fff !important; }
+.brand .brand-text {
+  background: linear-gradient(90deg, #a5b4fc, #f9a8d4, #fcd34d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.brand .brand-logo {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: #fff url("/logo.jpg") no-repeat;
+  background-size: 73px 73px;
+  background-position: -14px -3px;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+}
+.hero-logo {
+  display: block;
+  width: 260px;
+  max-width: 70%;
+  margin: 0 auto 20px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+.auth-logo {
+  display: block;
+  width: 230px;
+  max-width: 100%;
+  margin-bottom: 16px;
+  border-radius: 20px;
+  background: #fff;
+}

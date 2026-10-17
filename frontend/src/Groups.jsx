@@ -32,7 +32,23 @@ export default function Groups() {
     }
   };
 
-  useEffect(() => { loadGroups(); }, []);
+// Aadhicha delete function kadhun ha purna code taka:
+const handleDelete = async (id) => {
+  try {
+    // 1. Backend vardustun item delete kara
+    await axios.delete(`https://campushub-api-znud.onrender.com/api/resources/${id}`);
+    
+    // 2. MAHATVACHI GOST: Delete zalyanantar list parat refresh करा
+    await load(); 
+    
+    setMessage("Item successfully delete zala!");
+  } catch (err) {
+    console.error("Delete failure:", err);
+    setError(errorMessage(err));
+  }
+};
+
+
 
   const openGroup = async (g) => {
     setSelected(g);

@@ -5,6 +5,14 @@ const api = axios.create({
   timeout: 90000,
 });
 
+// Avoid stale cached (304) answers on GET requests
+api.interceptors.request.use((config) => {
+  if ((config.method || "get").toLowerCase() === "get") {
+    config.params = { ...(config.params || {}), _t: Date.now() };
+  }
+  return config;
+});
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // While the free server is waking up, retry requests for about a minute
@@ -26,7 +34,6 @@ api.interceptors.response.use(
 );
 
 export function errorMessage(err) {
- 
   const status = err.response?.status;
   if (err.response?.data?.message) return err.response.data.message;
   if (err.response && [502, 503, 504].includes(status))
@@ -34,7 +41,6 @@ export function errorMessage(err) {
   if (err.request && !err.response)
     return `Cannot reach the server (${api.defaults.baseURL}). If it is the free server, wait a minute and try again.`;
   return "Something went wrong. Please try again.";
-
 }
 
 export default api;

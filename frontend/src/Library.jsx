@@ -5,6 +5,7 @@ import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
 
+
 const TYPES = ["Study Guide", "Research Paper", "Lab Manual", "Digital Textbook", "Study Tool"];
 const ICONS = {
   "Study Guide": "📘",
@@ -25,6 +26,8 @@ export default function Library() {
   const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const load = async () => {
     try {
@@ -38,45 +41,67 @@ export default function Library() {
     }
   };
 
-// Aadhicha delete function kadhun ha purna code taka:
-const handleDelete = async (id) => {
-  try {
-    // 1. Backend vardustun item delete kara
-    await axios.delete(`https://campushub-api-znud.onrender.com/api/resources/${id}`);
-    
-    // 2. MAHATVACHI GOST: Delete zalyanantar list parat refresh करा
-    await load(); 
-    
-    setMessage("Item successfully delete zala!");
-  } catch (err) {
-    console.error("Delete failure:", err);
-    setError(errorMessage(err));
-  }
-};
+  useEffect(() => { load(); }, [type]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); setMessage("");
+    const formEl = e.target;
+    setError("");
+    setMessage("");
+
+    const showTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (!form.title.trim()) {
+      setError("Please enter a title.");
+      showTop();
+      return;
+    }
+    if (!file && !editingId) {
+      setError("Please choose a file first.");
+      showTop();
+      return;
+    }
+    if (file && file.size > 10 * 1024 * 1024) {
+      setError("File is too large. Maximum size is 10 MB.");
+      showTop();
+      return;
+    }
+
+    setUploading(true);
+    setProgress(0);
     try {
       let fileUrl = form.fileUrl;
       if (file) {
         const data = new FormData();
         data.append("file", file);
-        const up = await api.post("/files/upload", data);
+        const up = await api.post("/files/upload", data, {
+          onUploadProgress: (ev) => {
+            if (ev.total) setProgress(Math.round((ev.loaded * 100) / ev.total));
+          },
+        });
         fileUrl = up.data.fileUrl;
       }
       const body = { ...form, fileUrl, userId: user.id };
       if (editingId) {
         await api.put(`/resources/${editingId}`, body);
-        setMessage("Resource updated");
+        setMessage("Resource updated ✅");
       } else {
         await api.post("/resources", body);
-        setMessage("Resource added");
+        setMessage("Resource uploaded successfully ✅");
       }
-      setForm(empty); setFile(null); setEditingId(null);
-      e.target.reset();
-      load();
+      setForm(empty);
+      setFile(null);
+      setEditingId(null);
+      formEl.reset();
+      setSearch("");
+      setType("");
+      const res = await api.get("/resources");
+      setResources(res.data);
     } catch (err) {
       setError(errorMessage(err));
+    } finally {
+      setUploading(false);
+      showTop();
     }
   };
 
@@ -112,12 +137,21 @@ const handleDelete = async (id) => {
           <textarea rows="3" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           <div className="row">
-            <button type="submit">{editingId ? "Update" : "Upload"}</button>
+            <button type="submit" disabled={uploading}>
+              {uploading
+                ? progress < 100
+                  ? `Uploading... ${progress}%`
+                  : "Saving..."
+                : editingId
+                ? "Update"
+                : "Upload"}
+            </button>
             {editingId && (
               <button type="button" className="secondary" onClick={() => { setEditingId(null); setForm(empty); setFile(null); }}>
                 Cancel
               </button>
             )}
+            {uploading && <span className="muted">The first upload can take up to a minute while the server wakes up.</span>}
           </div>
         </form>
       ) : (

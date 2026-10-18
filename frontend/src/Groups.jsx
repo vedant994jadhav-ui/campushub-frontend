@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import api, { errorMessage } from "./api.js";
 import { useAuth } from "./AuthContext.jsx";
 import Alert from "./components/Alert.jsx";
 import PageHeader from "./components/PageHeader.jsx";
 import Empty from "./components/Empty.jsx";
-import { Navigate } from "react-router-dom";
 
 export default function Groups() {
   const { user } = useAuth();
@@ -32,22 +32,9 @@ export default function Groups() {
     }
   };
 
-// Aadhicha delete function kadhun ha purna code taka:
-const handleDelete = async (id) => {
-  try {
-    // 1. Backend vardustun item delete kara
-    await axios.delete(`https://campushub-api-znud.onrender.com/api/resources/${id}`);
-    
-    // 2. MAHATVACHI GOST: Delete zalyanantar list parat refresh करा
-    await load(); 
-    
-    setMessage("Item successfully delete zala!");
-  } catch (err) {
-    console.error("Delete failure:", err);
-    setError(errorMessage(err));
-  }
-};
-
+  useEffect(() => {
+    if (user) loadGroups();
+  }, []);
 
 
   const openGroup = async (g) => {

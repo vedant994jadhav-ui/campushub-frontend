@@ -36,7 +36,6 @@ export default function Navbar() {
         <NavLink to="/groups">Groups</NavLink>
         <NavLink to="/notifications">Notifications</NavLink>
         <NavLink to="/donate">Donate</NavLink>
-        <NavLink to="/subscriptions">Subscriptions</NavLink>
         <NavLink to="/shop">Shop</NavLink>
       </div>
 

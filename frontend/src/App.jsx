@@ -6,7 +6,6 @@ import Library from "./Library.jsx";
 import Groups from "./Groups.jsx"; // जर फाईल StudyGroups.jsx असेल तर ही ओळ वापरा
 import Notifications from "./Notifications.jsx";
 import Donate from "./Donate.jsx";
-import Subscriptions from "./Subscriptions.jsx";
 import Shop from "./Shop.jsx";
 
 export default function App() {
@@ -22,7 +21,6 @@ export default function App() {
           <Route path="/groups" element={<Groups />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/donate" element={<Donate />} />
-          <Route path="/subscriptions" element={<Subscriptions />} />
         </Routes>
       </main>
     </>

@@ -33,11 +33,9 @@ public class ShopService {
         return donations.save(d);
     }
 
-    public List<Donation> getDonations(Long userId) {
-        if (userId != null) return donations.findByUserId(userId);
-        return donations.findAll();
-    }
-
+  public List<Donation> getDonations(Long userId) {
+    return donations.findAll();
+}
     public void deleteDonation(Long id) {
         Donation d = donations.findById(id).orElseThrow(() -> notFound("Donation not found with id " + id));
         donations.delete(d);

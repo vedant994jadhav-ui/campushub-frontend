@@ -16,7 +16,7 @@ export default function Donate() {
 
   const load = async () => {
     try {
-      const res = await api.get("/donations", { params: { userId: user.id } });
+      const res = await api.get("/donations");
       setDonations(res.data);
     } catch (err) {
       setError(errorMessage(err));
@@ -67,13 +67,15 @@ if (!user) return <Navigate to="/login" replace />;
         </form>
 
         <div>
-          <h3>My donations ({donations.length})</h3>
+          <h3>All donations ({donations.length})</h3>
           {donations.map((d) => (
             <div className="card" key={d.id}>
               <p style={{ marginTop: 0 }}>💝 {d.details}</p>
               <div className="row" style={{ justifyContent: "space-between" }}>
                 <span className="muted">{new Date(d.createdAt).toLocaleString()}</span>
-                <button className="danger" onClick={() => remove(d.id)}>Delete</button>
+              {user.id === d.userId && (
+  <button className="danger" onClick={() => remove(d.id)}>Delete</button>
+)}
               </div>
             </div>
           ))}
